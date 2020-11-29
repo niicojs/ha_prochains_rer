@@ -1,0 +1,12 @@
+{
+  "name": "prochains_rer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "robocopy custom_component \\\\homeassistant\\config\\custom_components\\prochains_rer & exit 0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
