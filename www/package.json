@@ -1,0 +1,23 @@
+{
+  "name": "ha_prochains_rer_ui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel index.html",
+    "build": "parcel build prochains-rer.js --experimental-scope-hoisting --no-source-maps",
+    "copy": "robocopy dist/ \\\\homeassistant\\config\\www prochains-rer.js & exit 0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "prettier": {
+    "singleQuote": true
+  },
+  "dependencies": {
+    "lit-element": "^2.4.0"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4"
+  }
+}
