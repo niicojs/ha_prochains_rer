@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "deploy-comp": "robocopy custom_component \\\\homeassistant\\config\\custom_components\\prochains_rer & exit 0"
+    "deploy-comp": "robocopy custom_components \\\\homeassistant\\config\\custom_components\\prochains_rer & exit 0",
+    "deploy-www": "robocopy www/dist/prod \\\\homeassistant\\config\\www\\prochains-rer & exit 0"
+  },
+  "prettier": {
+    "singleQuote": true
   },
   "keywords": [],
   "author": "",

@@ -8,6 +8,8 @@ import xml.etree.ElementTree as ET
 import requests
 import json
 from random import randrange
+import os
+import json
 
 DOMAIN = "prochains_rer"
 log = logging.getLogger(DOMAIN)
@@ -25,6 +27,12 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
   sensor = ProchainsTrains(name, depart, arrivee, auth, debut_journee)
   add_entities([sensor])
 
+def find_gare(gares, uic):
+  for gare in gares:
+    if (gare['uic'] == uic):
+        return gare['nom']
+  return uic
+
 def get_trains(url, auth):
   log.debug('get_trains(%s)', url)
   r = requests.get(
@@ -32,24 +40,30 @@ def get_trains(url, auth):
     auth=auth,
     headers={'accept': 'application/vnd.sncf.transilien.od.depart+xml;vers=1'}
   )
+  r.encoding = 'utf8'
   if not r.ok:
     log.error('unable to call api - %s', r.reason)
     return []
   
   root = ET.fromstring(r.text)
   
-  trains = []
+  with open(os.path.join(os.path.dirname(__file__), 'gares.json')) as file_gares:
+    gares = json.load(file_gares)
 
+  trains = []
   for train in root:
     date = datetime.strptime(train.findtext('date'), '%d/%m/%Y %H:%M')
     num = train.findtext('num')
     miss = train.findtext('miss')
     etat = train.findtext('etat', '')
+    term = train.findtext('term', '')
 
     trains.append({
       'date': date,
       'num': num,
-      'miss': miss,
+      'mission': miss,
+      'code_term': term,
+      'terminus': find_gare(gares, term),
       'etat': etat
     })
 
