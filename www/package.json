@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "parcel -d dist/dev index.html",
-    "build": "parcel build -d dist/prod prochains-rer.js --experimental-scope-hoisting --no-source-maps"
+    "dev": "parcel -d build index.html",
+    "build": "parcel build -d dist prochains-rer.js --experimental-scope-hoisting --no-source-maps"
   },
   "keywords": [],
   "author": "",
