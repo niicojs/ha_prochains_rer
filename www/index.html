@@ -5,16 +5,66 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Travel Time</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:900i"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
+      rel="stylesheet"
+    />
     <script src="./prochains-rer.js"></script>
+    <style>
+      body {
+        margin: 0px;
+        font-family: Roboto, sans-serif;
+      }
+    </style>
   </head>
   <body>
-    <x-travel-time id="test" />
     <script>
-      const elt = document.getElementById("test");
-      elt.hass = {};
-      elt.config = {
-        entities: [],
-      };
+      document.addEventListener('DOMContentLoaded', () => {
+        const elt = document.createElement('x-prochains-rer');
+        elt.setConfig({
+          type: 'custom:x-prochains-rer',
+          icon: 'c',
+          entities: ['sensor.prochains_rer'],
+          dev: true,
+        });
+        elt.hass = {
+          themes: { darkmode: true },
+          states: {
+            'sensor.prochains_rer': {
+              state: 25,
+              attributes: {
+                friendly_name: 'Prochains RER',
+                last_update: 'last_update: "2020-11-30T16:18:51.617050"',
+                trains: [
+                  {
+                    date: new Date().setMinutes(new Date().getMinutes() + 4),
+                    etat: '',
+                    mission: 'PAUL',
+                    terminus: 'AUSTERLITZ',
+                    num: '148442-148443',
+                  },
+                  {
+                    date: new Date().setMinutes(new Date().getMinutes() + 13),
+                    etat: '',
+                    mission: 'SARA',
+                    terminus: 'ORLY VILLE',
+                    num: '148844-148845',
+                  },
+                ],
+              },
+            },
+          },
+        };
+        document.body.appendChild(elt);
+      });
     </script>
   </body>
 </html>
