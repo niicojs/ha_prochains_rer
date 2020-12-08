@@ -1,3 +1,5 @@
+![exemple metro](assets/metro.png)
+
 ## Installation du Sensor
 
 ### Custom Component
