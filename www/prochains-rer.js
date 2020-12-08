@@ -10,6 +10,16 @@ const icons = {
   c: require('./static/c.svg'),
   d: require('./static/d.svg'),
   e: require('./static/e.svg'),
+  1: require('./static/1.svg'),
+  2: require('./static/2.svg'),
+  3: require('./static/3.svg'),
+  '3bis': require('./static/3bis.svg'),
+  4: require('./static/4.svg'),
+  10: require('./static/10.svg'),
+  11: require('./static/11.svg'),
+  12: require('./static/12.svg'),
+  13: require('./static/13.svg'),
+  14: require('./static/14.svg'),
 };
 
 class ProchainsRER extends LitElement {
@@ -43,11 +53,13 @@ class ProchainsRER extends LitElement {
   }
 
   render() {
-    if (!this.hass || !this.config?.entities?.length) return 'oups';
+    if (!this.hass || !this.config?.entities?.length) return 'error: no data?';
 
     const sensor = this.config.entities[0];
     const state = this.hass.states[sensor];
+    const api = state.api || 'transilien';
 
+    console.log(api);
     console.log(state.attributes.trains);
 
     const trains = state.attributes.trains
@@ -59,7 +71,7 @@ class ProchainsRER extends LitElement {
             start: new Date(),
             end: train.date,
           }),
-          { locale: fr }
+          { locale: fr, format: ['hours', 'minutes'] }
         );
         return train;
       })
@@ -72,7 +84,9 @@ class ProchainsRER extends LitElement {
         <thead>
           <tr>
             <th class="ligne" scope="col"></th>
-            <th class="num" scope="col">Train</th>
+            ${api === 'transilien'
+              ? html`<th class="num" scope="col">Train</th>`
+              : null}
             <th class="hour" scope="col">Heure</th>
             <th class="origdest" scope="col">Terminus</th>
             <th class="infos" scope="col">Infos</th>
@@ -89,10 +103,12 @@ class ProchainsRER extends LitElement {
                       /></span>`
                     : null}
                 </td>
-                <td class="num ng-binding">${train.mission}</td>
-                <td class="hour ng-binding">${train.horaire}</td>
-                <td class="origdest ng-binding">${train.terminus}</td>
-                <td class="infos">${train.etat}</td>
+                ${api === 'transilien'
+                  ? html`<td class="num">${train.mission}</td>`
+                  : null}
+                <td class="hour">${train.horaire}</td>
+                <td class="origdest">${train.terminus}</td>
+                <td class="infos">${train.etat || train.nicedate}</td>
               </tr>
             `
           )}
@@ -123,6 +139,9 @@ class ProchainsRER extends LitElement {
         border-collapse: collapse;
         border-spacing: 0;
       }
+      .train-times .ligne {
+        text-align: center
+      }
       .train-times th,
       .train-times tr {
         background-color: #0a1e61;
@@ -137,7 +156,7 @@ class ProchainsRER extends LitElement {
         text-align: left;
       }
       .train-times td {
-        padding: 0 15px;
+        padding: 0 10px;
       }
     `;
   }

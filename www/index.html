@@ -24,11 +24,8 @@
         font-family: Roboto, sans-serif;
       }
     </style>
-  </head>
-  <body>
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const elt = document.createElement('x-prochains-rer');
+      function setRERData(elt) {
         elt.setConfig({
           type: 'custom:x-prochains-rer',
           icon: 'c',
@@ -40,6 +37,7 @@
           states: {
             'sensor.prochains_rer': {
               state: 25,
+              api: 'transilien',
               attributes: {
                 friendly_name: 'Prochains RER',
                 last_update: 'last_update: "2020-11-30T16:18:51.617050"',
@@ -63,6 +61,48 @@
             },
           },
         };
+      }
+
+      function setMetroData(elt) {
+        elt.setConfig({
+          type: 'custom:x-prochains-rer',
+          entities: ['sensor.prochains_metros'],
+          icon: 10,
+          dev: true,
+        });
+        elt.hass = {
+          themes: { darkmode: true },
+          states: {
+            'sensor.prochains_metros': {
+              state: 25,
+              api: 'ratp',
+              attributes: {
+                friendly_name: 'Prochains RER',
+                last_update: 'last_update: "2020-11-30T16:18:51.617050"',
+                trains: [
+                  {
+                    date: new Date().setMinutes(new Date().getMinutes() + 4),
+                    etat: '',
+                    terminus: 'AUSTERLITZ',
+                  },
+                  {
+                    date: new Date().setMinutes(new Date().getMinutes() + 13),
+                    etat: '',
+                    terminus: 'ORLY VILLE',
+                  },
+                ],
+              },
+            },
+          },
+        };
+      }
+    </script>
+  </head>
+  <body>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const elt = document.createElement('x-prochains-rer');
+        setMetroData(elt);
         document.body.appendChild(elt);
       });
     </script>
