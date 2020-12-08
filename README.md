@@ -5,7 +5,7 @@
 ### Custom Component
 
 Copier le repertoire `custom_components` dans `/config/custom_components`, modifier la config comme indiqué ci dessous puis rémarrer Home Assistant.  
-Vous devriez voir arriver un `sensor.prochain_rer` avec le nombre de minute avant le prochain train. 
+Vous devriez voir arriver un `sensor.prochain_rer` avec le nombre de minutes avant le prochain train. 
 
 ### Config Transilien
 Dans le cas `api: transilien`.  
@@ -17,7 +17,7 @@ Voir [ici](https://ressources.data.sncf.com/explore/dataset/api-temps-reel-trans
 
 Enfin, dans le fichier `configuration.yaml`, déclarer le `sensor`.
 
-```
+```yaml
 sensor:
   - platform: prochains_rer
     api: transilien
@@ -33,7 +33,7 @@ Dans le cas `api: ratp`.
 Voir ici la documentation de l'API : https://github.com/pgrimaud/horaires-ratp-api.  
 Le paramètre `path` correspond à l'URL après `schedules` dans les exemples du site.
 
-```
+```yaml
 sensor:
   - platform: prochains_rer
     name: prochains_metro
@@ -43,12 +43,12 @@ sensor:
 
 ## Lovelace
 
-Copier le repertoire `www/dist` dans `/config/www/prochains_rer`.
+Copier le repertoire `www/dist` dans `/config/www/prochains_rer`.  
 Ajouter une ressource Lovelace de type `Module JavaScript` avec comme valeur `/local/prochains-rer/prochains-rer.js`.  
 Ajouter une carte avec comme config:
 ```yaml
 type: 'custom:x-prochains-rer'
-icon: c # icon de la ligne de RER : a, b, c, d ou e (ou rien)
+icon: c # icon de la ligne ou lien https vers un icon
 max_trains: 5
 entities:
   - sensor.prochains_rer
