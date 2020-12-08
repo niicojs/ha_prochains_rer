@@ -62,7 +62,7 @@ class ProchainsRER extends LitElement {
 
     const sensor = this.config.entities[0];
     const state = this.hass.states[sensor];
-    const api = state.api || 'transilien';
+    const api = state.attributes.api || 'transilien';
 
     console.log(api);
     console.log(state.attributes.trains);
