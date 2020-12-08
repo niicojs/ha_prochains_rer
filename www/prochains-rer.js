@@ -18,6 +18,8 @@ const icons = {
   5: require('./static/5.svg'),
   6: require('./static/6.svg'),
   7: require('./static/7.svg'),
+  8: require('./static/8.svg'),
+  9: require('./static/9.svg'),
   10: require('./static/10.svg'),
   11: require('./static/11.svg'),
   12: require('./static/12.svg'),
@@ -46,9 +48,9 @@ class ProchainsRER extends LitElement {
   setConfig(config) {
     this.config = config;
     this.maxTrains = config.max_trains || 5;
-    this.icon = undefined;
-    if (this.config.icon) {
-      this.icon = icons[this.config.icon];
+    this.icon = this.config.icon;
+    if (this.icon && this.icon in icons) {
+      this.icon = icons[this.icon];
       if (!config.dev) {
         this.icon = `/local/prochains-rer${icons[this.config.icon]}`;
       }
@@ -143,7 +145,7 @@ class ProchainsRER extends LitElement {
         border-spacing: 0;
       }
       .train-times .ligne {
-        text-align: center
+        text-align: center;
       }
       .train-times th,
       .train-times tr {
