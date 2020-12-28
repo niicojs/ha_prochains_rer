@@ -64,9 +64,6 @@ class ProchainsRER extends LitElement {
     const state = this.hass.states[sensor];
     const api = state.attributes.api || 'transilien';
 
-    console.log(api);
-    console.log(state.attributes.trains);
-
     const trains = state.attributes.trains
       .map((train) => {
         train.date = new Date(train.date);
@@ -81,8 +78,6 @@ class ProchainsRER extends LitElement {
         return train;
       })
       .filter((_, i) => i < this.maxTrains);
-
-    console.log(trains);
 
     return html`
       <table class="train-times">
