@@ -2,7 +2,7 @@
   "domain": "prochains_rer",
   "name": "Prochains RER",
   "documentation": "https://github.com/niicojs/ha_prochains_rer",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "dependencies": [],
   "codeowners": [],
   "requirements": []

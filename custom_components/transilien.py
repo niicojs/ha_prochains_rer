@@ -28,6 +28,8 @@ def get_trains(url, auth):
   if not r.ok:
     log.error('unable to call api - %s', r.reason)
     return []
+
+  # log.debug(r.text)
   
   root = ET.fromstring(r.text)
   
@@ -87,7 +89,7 @@ class ProchainsTrains(Entity):
     return 'mdi:train'
 
   @property
-  def device_state_attributes(self):
+  def state_attributes(self):
     return {
       'api': 'transilien',
       'last_update': self.last_update,
@@ -102,12 +104,11 @@ class ProchainsTrains(Entity):
       return (self.auth['username'], self.auth['password'])
 
   def update(self):
+    log.debug('Updating %s...', self.name)
     if datetime.now().hour < self.debut_journee:
       self.data = []
       self.last_update = None
-    else:
-      if self.last_update is None or (datetime.now() - self.last_update).total_seconds() > 5*60:
-        url = 'http://api.transilien.com/gare/{}/depart/{}'.format(self.depart, self.arrivee)
-        data = get_trains(url, self.get_auth())
-        self.data = data
-        self.last_update = datetime.now()
+    elif self.last_update is None or (datetime.now() - self.last_update).total_seconds() > 5*60:
+      url = 'http://api.transilien.com/gare/{}/depart/{}'.format(self.depart, self.arrivee)
+      self.data = get_trains(url, self.get_auth())
+      self.last_update = datetime.now()

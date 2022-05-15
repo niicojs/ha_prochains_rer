@@ -15,7 +15,7 @@ log = logging.getLogger(DOMAIN)
 SCAN_INTERVAL = timedelta(minutes=1)
 
 def setup_platform(hass, config, add_entities, discovery_info=None):
-  log.info('Prochains RER v0.1')
+  log.info('Prochains RER v1.1.0')
   name = config.get('name', 'Prochains RER')
   api = config.get('api', 'transilien')
   debut_journee = config.get('debut_journee', 5)
